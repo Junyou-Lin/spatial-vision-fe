@@ -1,4 +1,5 @@
 import * as React from 'react'
+import mapboxgl from 'mapbox-gl'
 
 import Map, {
   Marker,
@@ -9,8 +10,9 @@ import Map, {
 } from 'react-map-gl'
 
 import Pin from './Pin'
-
-const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN
+mapboxgl.workerClass =
+  // eslint-disable-next-line import/no-webpack-loader-syntax
+  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 
 export default function GeoMap({ location, viewState, setViewState }) {
   return (
@@ -19,7 +21,7 @@ export default function GeoMap({ location, viewState, setViewState }) {
       onMove={(evt) => setViewState(evt.viewState)}
       style={{ height: '30vh' }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
-      mapboxAccessToken={TOKEN}>
+      mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}>
       <GeolocateControl position="top-left" />
       <FullscreenControl position="top-left" />
       <NavigationControl position="top-left" />
