@@ -20,8 +20,7 @@
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "worker-loader": "^3.0.8"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

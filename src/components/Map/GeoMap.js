@@ -10,9 +10,6 @@ import Map, {
 } from 'react-map-gl'
 
 import Pin from './Pin'
-mapboxgl.workerClass =
-  // eslint-disable-next-line import/no-webpack-loader-syntax
-  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 
 export default function GeoMap({ location, viewState, setViewState }) {
   return (
