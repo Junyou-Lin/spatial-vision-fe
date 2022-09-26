@@ -5,8 +5,10 @@ import { baseURL } from '../../api/api'
 import dayjs from 'dayjs'
 import Notification from '../../components/Notification/Notification'
 import UserTextFields from '../../components/UserTextFields/UserTextFields'
+import Loading from '../../components/Loading/Loading'
 
 export default function Signup() {
+  const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState()
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -28,18 +30,21 @@ export default function Signup() {
       setErrorMessage('Date of Birth must be in the past')
       return
     }
+    setLoading(true)
     axios
       .post(`${baseURL}/users`, data)
       .then((res) => {
         navigate('/')
       })
       .catch((err) => {
+        setLoading(false)
         setErrorMessage(err.response.data)
       })
   }
 
   return (
     <>
+      {loading && <Loading loading={loading} />}
       {errorMessage && <Notification severity="error" message={errorMessage} />}
       <UserTextFields
         data={data}

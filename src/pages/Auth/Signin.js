@@ -7,9 +7,11 @@ import { useNavigate } from 'react-router-dom'
 import { baseURL } from '../../api/api'
 import Notification from '../../components/Notification/Notification'
 import { setInputLabel, setInputType } from '../../utils/setInput'
+import Loading from '../../components/Loading/Loading'
 
 export default function SignIn() {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -26,29 +28,40 @@ export default function SignIn() {
         navigate('/user')
       })
       .catch((err) => {
+        setLoading(false)
         setErrorMessage(err.response.data)
       })
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
-      {errorMessage && <Notification severity="error" message={errorMessage} />}
-      {textFieldInputs.map((input, index) => (
-        <TextField
-          key={index}
-          margin="normal"
-          required
+    <>
+      {loading && <Loading loading={loading} />}
+
+      <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+        {errorMessage && (
+          <Notification severity="error" message={errorMessage} />
+        )}
+        {textFieldInputs.map((input, index) => (
+          <TextField
+            key={index}
+            margin="normal"
+            required
+            fullWidth
+            label={setInputLabel(input)}
+            type={setInputType(input)}
+            autoComplete={input}
+            value={data.input}
+            onChange={(e) => setData({ ...data, [input]: e.target.value })}
+          />
+        ))}
+        <Button
+          type="submit"
           fullWidth
-          label={setInputLabel(input)}
-          type={setInputType(input)}
-          autoComplete={input}
-          value={data.input}
-          onChange={(e) => setData({ ...data, [input]: e.target.value })}
-        />
-      ))}
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Sign In
-      </Button>
-    </Box>
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}>
+          Sign In
+        </Button>
+      </Box>
+    </>
   )
 }

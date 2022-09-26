@@ -60,7 +60,7 @@ export default function UserEdit() {
   }
 
   return loading ? (
-    <Loading />
+    <Loading loading={loading} />
   ) : (
     <Card variant="outlined" sx={{ width: '80%', m: 'auto' }}>
       <CardContent
