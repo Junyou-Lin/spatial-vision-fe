@@ -3,27 +3,26 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete'
-import React from 'react'
+import { useState } from 'react'
 import GeoMap from '../Map/GeoMap'
 
 export default function LocationSearchInput({
   address,
-  setAddress,
   location,
-  setLocation,
+  data,
+  setData,
 }) {
-  const [viewState, setViewState] = React.useState({
+  const [viewState, setViewState] = useState({
     latitude: location.latitude,
     longitude: location.longitude,
     zoom: 12,
   })
 
   const handleChange = (address) => {
-    setAddress(address)
+    setData({ ...data, address })
   }
 
   const handleSelect = (address) => {
-    setAddress(address)
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {
@@ -31,9 +30,13 @@ export default function LocationSearchInput({
           latitude: latLng.lat,
           longitude: latLng.lng,
         })
-        setLocation({
-          latitude: latLng.lat,
-          longitude: latLng.lng,
+        setData({
+          ...data,
+          location: {
+            latitude: latLng.lat,
+            longitude: latLng.lng,
+          },
+          address,
         })
       })
       .catch((error) => console.error('Error', error))

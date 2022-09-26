@@ -15,12 +15,14 @@ import {
 import dayjs from 'dayjs'
 import GeoMap from '../../components/Map/GeoMap'
 import Loading from '../../components/Loading/Loading'
+import { setInputLabel } from '../../utils/setInput'
 
 export default function User() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
   const [viewState, setViewState] = useState()
+  const ListItems = ['firstName', 'lastName', 'email', 'dob', 'address']
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -60,22 +62,18 @@ export default function User() {
         <Avatar sx={{ my: 1 }}>{user.firstName[0] + user.lastName[0]}</Avatar>
         <List component="nav" aria-label="mailbox folders">
           <Divider />
-          <ListItem divider>
-            <ListItemText
-              primary={`Name: ${user.firstName} ${user.lastName}`}
-            />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText primary={`Email: ${user.email}`} />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText
-              primary={`Date of Birth: ${dayjs(user.dob).format('DD/MM/YYYY')}`}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary={`Address: ${user.address}`} />
-          </ListItem>
+          {ListItems.map((item, index) => (
+            <ListItem divider key={index}>
+              <ListItemText
+                primary={`${setInputLabel(item)} : ${
+                  item === 'dob'
+                    ? dayjs(user[item]).format('DD/MM/YYYY')
+                    : user[item]
+                }
+                `}
+              />
+            </ListItem>
+          ))}
           <ListItem>
             <GeoMap
               location={{
