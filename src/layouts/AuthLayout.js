@@ -36,7 +36,7 @@ export default function AuthLayout() {
           </Typography>
           <Outlet />
           <Grid container>
-            <Grid item sx={{ mx: 3 }}>
+            <Grid item>
               <Link to={location.pathname === '/' ? '/signup' : '/'}>
                 <Typography variant="body2">
                   {location.pathname === '/'

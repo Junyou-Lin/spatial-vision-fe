@@ -16,7 +16,7 @@ export default function UserTextFields({
     setData({ ...data, dob: newDob })
   }
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mx: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', mx: 4 }}>
       {textFieldInputs.map((input, index) => (
         <TextField
           key={index}

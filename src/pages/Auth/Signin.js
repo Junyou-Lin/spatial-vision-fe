@@ -31,7 +31,7 @@ export default function SignIn() {
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mx: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
       {errorMessage && <Notification severity="error" message={errorMessage} />}
       {textFieldInputs.map((input, index) => (
         <TextField
